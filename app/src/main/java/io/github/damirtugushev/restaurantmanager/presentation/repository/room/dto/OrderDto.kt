@@ -10,7 +10,7 @@ import io.github.damirtugushev.restaurantmanager.domain.model.Order
 
 @Entity(tableName = "order")
 data class OrderDto(
-    @PrimaryKey(autoGenerate = true) val oid: Int,
+    @PrimaryKey(autoGenerate = true) val oid: Long = 0L,
     override val tableNumber: UByte,
     override val guestsNumber: UByte,
 ) : Order

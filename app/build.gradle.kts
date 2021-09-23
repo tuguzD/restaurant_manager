@@ -1,6 +1,6 @@
 plugins {
     id("com.android.application")
-    id("kotlin-android")
+    kotlin("android")
 }
 
 android {
@@ -41,6 +41,7 @@ dependencies {
     // Room
     val roomVersion = "2.3.0"
     implementation("androidx.room:room-runtime:$roomVersion")
+    implementation("androidx.room:room-ktx:$roomVersion")
     annotationProcessor("androidx.room:room-compiler:$roomVersion")
 
     // Testing
