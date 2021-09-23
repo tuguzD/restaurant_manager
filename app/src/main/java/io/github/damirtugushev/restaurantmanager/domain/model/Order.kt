@@ -1,10 +1,10 @@
 package io.github.damirtugushev.restaurantmanager.domain.model
 
 /**
- * Base class for all orders made in the restaurant.
+ * Base interface for all orders made in the restaurant.
  */
 
-open class Order(
-    open val tableNumber: UByte,
-    open val guestsNumber: UByte,
-)
+interface Order {
+    val tableNumber: UByte
+    val guestsNumber: UByte
+}

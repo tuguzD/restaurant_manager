@@ -5,9 +5,7 @@ import androidx.room.PrimaryKey
 import io.github.damirtugushev.restaurantmanager.domain.model.Meal
 
 /**
- * Data transfer object (Dto) for `Meal` class.
- *
- * @see Meal
+ * Data transfer object (Dto) for [Meal].
  */
 
 @Entity(tableName = "meal")
@@ -15,7 +13,4 @@ data class MealDto(
     @PrimaryKey(autoGenerate = true) val mid: Int,
     override val name: String,
     override val description: String,
-) : Meal(
-    name,
-    description,
-)
+) : Meal

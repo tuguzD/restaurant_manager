@@ -5,9 +5,7 @@ import androidx.room.PrimaryKey
 import io.github.damirtugushev.restaurantmanager.domain.model.Order
 
 /**
- * Data transfer object (Dto) for `Order` class.
- *
- * @see Order
+ * Data transfer object (Dto) for [Order].
  */
 
 @Entity(tableName = "order")
@@ -15,7 +13,4 @@ data class OrderDto(
     @PrimaryKey(autoGenerate = true) val oid: Int,
     override val tableNumber: UByte,
     override val guestsNumber: UByte,
-) : Order(
-    tableNumber,
-    guestsNumber,
-)
+) : Order

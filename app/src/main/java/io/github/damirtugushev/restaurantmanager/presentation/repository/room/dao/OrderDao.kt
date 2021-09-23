@@ -9,9 +9,7 @@ import io.github.damirtugushev.restaurantmanager.domain.model.Order
 import io.github.damirtugushev.restaurantmanager.presentation.repository.room.dto.OrderDto
 
 /**
- * Data access object (Dao) for `Order` class.
- *
- * @see Order
+ * Data access object (Dao) for [Order] class.
  */
 
 @Dao
