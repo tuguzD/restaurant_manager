@@ -11,7 +11,6 @@ import io.github.damirtugushev.restaurantmanager.presentation.repository.room.dt
 /**
  * Data access object (Dao) for [Order] class.
  */
-
 @Dao
 interface OrderDao {
     @Insert
@@ -20,9 +19,9 @@ interface OrderDao {
     @Delete
     fun deleteOrder(order: OrderDto)
 
-    @Query("SELECT * FROM order")
+    @Query("SELECT * FROM `order`")
     fun getAllOrders(): LiveData<List<OrderDto>>
 
-    @Query("DELETE FROM order")
+    @Query("DELETE FROM `order`")
     fun deleteAllOrders()
 }

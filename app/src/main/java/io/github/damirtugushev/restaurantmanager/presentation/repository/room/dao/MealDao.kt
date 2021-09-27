@@ -11,10 +11,9 @@ import io.github.damirtugushev.restaurantmanager.presentation.repository.room.dt
 /**
  * Data access object (Dao) for [Meal] class.
  */
-
 @Dao
 interface MealDao {
-    @Query("SELECT * FROM meal WHERE name LIKE :name")
+    @Query("SELECT * FROM `meal` WHERE `name` LIKE :name")
     fun findByName(name: String): LiveData<List<MealDto>>
 
     @Insert
@@ -23,9 +22,9 @@ interface MealDao {
     @Delete
     fun deleteMeal(meal: MealDto)
 
-    @Query("SELECT * FROM meal")
+    @Query("SELECT * FROM `meal`")
     fun getAllMeals(): LiveData<List<MealDto>>
 
-    @Query("DELETE FROM meal")
+    @Query("DELETE FROM `meal`")
     fun deleteAllMeals()
 }

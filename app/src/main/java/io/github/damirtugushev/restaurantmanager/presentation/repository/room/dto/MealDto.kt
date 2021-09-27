@@ -7,10 +7,9 @@ import io.github.damirtugushev.restaurantmanager.domain.model.Meal
 /**
  * Data transfer object (Dto) for [Meal].
  */
-
 @Entity(tableName = "meal")
 data class MealDto(
-    @PrimaryKey(autoGenerate = true) val mid: Long = 0L,
     override val name: String,
     override val description: String,
+    @PrimaryKey(autoGenerate = true) var mid: Long = 0L,
 ) : Meal
