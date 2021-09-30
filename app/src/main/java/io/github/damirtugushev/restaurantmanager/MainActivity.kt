@@ -4,35 +4,29 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import io.github.damirtugushev.restaurantmanager.databinding.ActivityMainBinding
-import io.github.damirtugushev.restaurantmanager.presentation.repository.OrderRepository
+import io.github.damirtugushev.restaurantmanager.presentation.repository.RepositoryAccess
 
 /**
  * Entry point of the application.
  */
 class MainActivity : AppCompatActivity() {
-    lateinit var binding: ActivityMainBinding
+    private lateinit var _binding: ActivityMainBinding
 
-    companion object {
-        lateinit var repository: OrderRepository
-            private set
-    }
+    val binding get() = _binding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        repository = OrderRepository(application)
 
-        val view = binding.root
-        setContentView(view)
+        _binding = ActivityMainBinding.inflate(layoutInflater)
 
-        val toolbar = binding.toolbar
-        setSupportActionBar(toolbar)
+        RepositoryAccess.initRoom(application)
 
-        val fab = binding.fab
-        fab.setOnClickListener {
+        setContentView(binding.root)
+        setSupportActionBar(binding.toolbar)
+
+        binding.fab.setOnClickListener {
             val fragmentContainer = binding.navHostFragment
             fragmentContainer.findNavController().navigate(R.id.action_component_add_fragment)
-            fab.hide()
         }
     }
 }

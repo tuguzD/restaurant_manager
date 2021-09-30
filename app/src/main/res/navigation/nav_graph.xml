@@ -13,6 +13,10 @@
         tools:layout="@layout/fragment_order_list">
         <action
             android:id="@+id/action_component_add_fragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out"
             app:destination="@id/component_add_fragment" />
     </fragment>
 
@@ -20,10 +24,6 @@
         android:id="@+id/component_add_fragment"
         android:name="io.github.damirtugushev.restaurantmanager.presentation.view.OrderAddFragment"
         android:label="fragment_component_add"
-        tools:layout="@layout/fragment_order_add">
-        <action
-            android:id="@+id/action_component_list_fragment"
-            app:destination="@id/component_list_fragment" />
-    </fragment>
+        tools:layout="@layout/fragment_order_add" />
 
 </navigation>

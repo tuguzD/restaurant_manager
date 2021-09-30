@@ -2,17 +2,19 @@ package io.github.damirtugushev.restaurantmanager.presentation.repository
 
 import androidx.lifecycle.LiveData
 import io.github.damirtugushev.restaurantmanager.domain.model.Order
-import io.github.damirtugushev.restaurantmanager.presentation.repository.room.dto.OrderDto
+import kotlinx.coroutines.CoroutineDispatcher
 
 /**
  * Base interface for all repositories.
  */
-interface Repository {
-    suspend fun addOrder(order: OrderDto)
+interface Repository<O : Order> {
+    val defaultDispatcher: CoroutineDispatcher
 
-    suspend fun deleteOrder(order: OrderDto)
+    fun getAllOrders(): LiveData<out List<O>>
 
-    fun getAllOrders(): LiveData<out List<Order>>
+    suspend fun addOrder(order: O)
+
+    suspend fun deleteOrder(order: O)
 
     suspend fun deleteAllOrders()
 }

@@ -2,6 +2,7 @@ package io.github.damirtugushev.restaurantmanager.presentation.view.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import io.github.damirtugushev.restaurantmanager.R
 import io.github.damirtugushev.restaurantmanager.databinding.OrderItemBinding
@@ -10,11 +11,21 @@ import io.github.damirtugushev.restaurantmanager.domain.model.Order
 /**
  * [RecyclerView.Adapter] that can display an [Order].
  */
-class OrderListAdapter(private val data: List<Order>) :
-    RecyclerView.Adapter<OrderListAdapter.OrderViewHolder>() {
+class OrderListAdapter :
+    ListAdapter<Order, OrderListAdapter.OrderViewHolder>(OrderDiffCallback) {
 
-    inner class OrderViewHolder(val binding: OrderItemBinding) :
-        RecyclerView.ViewHolder(binding.root)
+    inner class OrderViewHolder(private val binding: OrderItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+
+        fun bind(order: Order) {
+            binding.run {
+                tableNumber.text = root.resources.getString(
+                    R.string.table_number_is, order.tableNumber)
+                guestsNumber.text = root.resources.getString(
+                    R.string.guests_number_is, order.guestsNumber)
+            }
+        }
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OrderViewHolder {
         val binding = OrderItemBinding.inflate(
@@ -26,15 +37,7 @@ class OrderListAdapter(private val data: List<Order>) :
     }
 
     override fun onBindViewHolder(holder: OrderViewHolder, position: Int) {
-        val item = data[position]
-        holder.binding.run {
-            tableNumber.text = root.resources.getString(
-                R.string.table_number_is, item.tableNumber.toString())
-            guestsNumber.text = root.resources.getString(
-                R.string.guests_number_is, item.guestsNumber.toString())
-        }
+        val component = currentList[position]
+        holder.bind(component)
     }
-
-    override fun getItemCount() = data.size
-
 }
