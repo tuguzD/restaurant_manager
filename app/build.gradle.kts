@@ -57,6 +57,7 @@ dependencies {
     val roomVersion = "2.3.0"
     implementation("androidx.room:room-runtime:$roomVersion")
     implementation("androidx.room:room-ktx:$roomVersion")
+    // Room annotations with Kotlin annotation processing tool
     kapt("androidx.room:room-compiler:$roomVersion")
 
     // Testing
