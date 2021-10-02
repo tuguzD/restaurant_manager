@@ -27,7 +27,7 @@
 
                 <data
                     android:scheme="https"
-                    android:host="app.restaurant_manager"/>
+                    android:host="android.restaurant_manager"/>
             </intent-filter>
         </activity>
 

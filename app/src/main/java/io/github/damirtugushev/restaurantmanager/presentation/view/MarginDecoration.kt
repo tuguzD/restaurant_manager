@@ -1,4 +1,4 @@
-package io.github.damirtugushev.restaurantmanager.presentation.view.decorations
+package io.github.damirtugushev.restaurantmanager.presentation.view
 
 import android.graphics.Rect
 import android.view.View

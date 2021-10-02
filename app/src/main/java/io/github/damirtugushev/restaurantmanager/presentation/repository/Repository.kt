@@ -1,6 +1,8 @@
 package io.github.damirtugushev.restaurantmanager.presentation.repository
 
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import io.github.damirtugushev.restaurantmanager.domain.model.Order
 import kotlinx.coroutines.CoroutineDispatcher
 
@@ -10,11 +12,18 @@ import kotlinx.coroutines.CoroutineDispatcher
 interface Repository<O : Order> {
     val defaultDispatcher: CoroutineDispatcher
 
-    fun getAllOrders(): LiveData<out List<O>>
+    val allOrders: LiveData<out List<O>>
 
-    suspend fun addOrder(order: O)
+    suspend fun add(order: Order)
 
-    suspend fun deleteOrder(order: O)
+    suspend fun remove(order: O)
 
-    suspend fun deleteAllOrders()
+    suspend fun clear()
 }
+
+fun <C : Order> Repository<C>.findById(nanoId: String, owner: LifecycleOwner) : LiveData<Order> =
+    MutableLiveData<Order>().apply {
+        allOrders.observe(owner) { components ->
+            value = components.find { it.nanoId == nanoId }
+        }
+    }

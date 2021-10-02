@@ -17,14 +17,14 @@ interface MealDao {
     fun findByName(name: String): LiveData<List<MealDto>>
 
     @Insert
-    fun addMeal(meal: MealDto)
+    suspend fun addMeal(meal: MealDto)
 
     @Delete
-    fun deleteMeal(meal: MealDto)
+    suspend fun deleteMeal(meal: MealDto)
 
     @Query("SELECT * FROM `meal`")
     fun getAllMeals(): LiveData<List<MealDto>>
 
     @Query("DELETE FROM `meal`")
-    fun deleteAllMeals()
+    suspend fun deleteAllMeals()
 }

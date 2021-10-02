@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/orders_nav_graph"
+    app:startDestination="@id/order_list_fragment">
+
+    <fragment
+        android:id="@+id/order_list_fragment"
+        android:name="io.github.damirtugushev.restaurantmanager.presentation.view.order.OrderListFragment"
+        android:label="fragment_order_list"
+        tools:layout="@layout/fragment_order_list">
+        <action
+            android:id="@+id/action_order_add_fragment"
+            app:destination="@id/order_add_fragment" />
+        <action
+            android:id="@+id/action_order_item_fragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out"
+            app:destination="@id/order_item_fragment">
+        </action>
+    </fragment>
+
+    <fragment
+        android:id="@+id/order_add_fragment"
+        android:name="io.github.damirtugushev.restaurantmanager.presentation.view.order.OrderAddFragment"
+        android:label="fragment_order_add"
+        tools:layout="@layout/fragment_order_add" />
+
+    <fragment
+        android:id="@+id/order_item_fragment"
+        android:name="io.github.damirtugushev.restaurantmanager.presentation.view.order.OrderItemFragment"
+        android:label="fragment_order_item"
+        tools:layout="@layout/fragment_order_item">
+
+        <argument
+            android:name="order"
+            app:argType="io.github.damirtugushev.restaurantmanager.presentation.model.OrderData" />
+
+    </fragment>
+
+</navigation>

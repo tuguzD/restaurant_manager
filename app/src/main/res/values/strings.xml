@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Restaurant Manager</string>
     <string name="add_new_order">Add new order</string>
+    <string name="create_order">Create order</string>
 
     <string name="table_number">Table number</string>
     <string name="table_number_is">Table №%1$d</string>
@@ -8,5 +9,10 @@
     <string name="guests_number">Guests number</string>
     <string name="guests_number_is">Number of guests is %1$d</string>
 
-    <string name="create_order">Create order</string>
+<!--Bottom navigation menu -->
+    <string name="orders">Orders</string>
+    <string name="delivery">Delivery</string>
+    <string name="account">Account</string>
+
+    <string name="share">Share</string>
 </resources>

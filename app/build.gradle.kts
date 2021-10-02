@@ -1,7 +1,9 @@
 plugins {
     id("com.android.application")
+    id("kotlin-parcelize")
     kotlin("android")
     kotlin("kapt")
+    id("androidx.navigation.safeargs.kotlin")
 }
 
 android {
@@ -49,9 +51,9 @@ dependencies {
     implementation("androidx.recyclerview:recyclerview:1.2.1")
     implementation("androidx.navigation:navigation-fragment-ktx:2.3.5")
     implementation("androidx.navigation:navigation-ui-ktx:2.3.5")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.3.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2")
 
     // Room
     val roomVersion = "2.3.0"
@@ -59,6 +61,9 @@ dependencies {
     implementation("androidx.room:room-ktx:$roomVersion")
     // Room annotations with Kotlin annotation processing tool
     kapt("androidx.room:room-compiler:$roomVersion")
+
+    // Third-party
+    implementation("com.aventrix.jnanoid:jnanoid:2.0.0")
 
     // Testing
     testImplementation("junit:junit:4.13.2")

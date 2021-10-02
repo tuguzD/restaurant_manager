@@ -14,14 +14,14 @@ import io.github.damirtugushev.restaurantmanager.presentation.repository.room.dt
 @Dao
 interface OrderDao {
     @Insert
-    suspend fun addOrder(order: OrderDto)
+    suspend fun insert(order: OrderDto)
 
     @Delete
-    suspend fun deleteOrder(order: OrderDto)
+    suspend fun delete(order: OrderDto)
 
     @Query("SELECT * FROM `order`")
-    fun getAllOrders(): LiveData<List<OrderDto>>
+    fun getAll(): LiveData<List<OrderDto>>
 
     @Query("DELETE FROM `order`")
-    suspend fun deleteAllOrders()
+    suspend fun deleteAll()
 }
