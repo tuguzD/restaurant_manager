@@ -14,7 +14,9 @@ interface Repository<O : Order> {
 
     val allOrders: LiveData<out List<O>>
 
-    suspend fun add(order: Order)
+    suspend fun add(order: O)
+
+    suspend fun update(order: O)
 
     suspend fun remove(order: O)
 

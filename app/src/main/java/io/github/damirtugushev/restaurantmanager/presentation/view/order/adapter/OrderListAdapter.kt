@@ -6,6 +6,8 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import io.github.damirtugushev.restaurantmanager.databinding.ItemOrderBinding
 import io.github.damirtugushev.restaurantmanager.domain.model.Order
+import io.github.damirtugushev.restaurantmanager.presentation.model.OrderData
+import io.github.damirtugushev.restaurantmanager.presentation.repository.room.dto.OrderDto
 
 /**
  * [RecyclerView.Adapter] that can display an [Order].
@@ -21,8 +23,12 @@ class OrderListAdapter : ListAdapter<Order, OrderViewHolder>(OrderDiffCallback) 
     }
 
     override fun onBindViewHolder(holder: OrderViewHolder, position: Int) {
-        val component = currentList[position]
-        holder.bind(component)
+        val order = when (val order = currentList[position]) {
+            is OrderData -> order
+            is OrderDto -> OrderData(order)
+            else -> OrderData(order)
+        }
+        holder.bind(order)
     }
 
     fun add(index: Int, order: Order) {

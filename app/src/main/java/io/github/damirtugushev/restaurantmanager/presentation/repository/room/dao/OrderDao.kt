@@ -1,10 +1,7 @@
 package io.github.damirtugushev.restaurantmanager.presentation.repository.room.dao
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.room.*
 import io.github.damirtugushev.restaurantmanager.domain.model.Order
 import io.github.damirtugushev.restaurantmanager.presentation.repository.room.dto.OrderDto
 
@@ -15,6 +12,9 @@ import io.github.damirtugushev.restaurantmanager.presentation.repository.room.dt
 interface OrderDao {
     @Insert
     suspend fun insert(order: OrderDto)
+
+    @Update
+    suspend fun update(order: OrderDto)
 
     @Delete
     suspend fun delete(order: OrderDto)

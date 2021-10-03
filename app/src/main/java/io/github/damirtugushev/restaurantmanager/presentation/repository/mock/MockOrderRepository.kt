@@ -3,7 +3,6 @@ package io.github.damirtugushev.restaurantmanager.presentation.repository.mock
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.aventrix.jnanoid.jnanoid.NanoIdUtils
-import io.github.damirtugushev.restaurantmanager.domain.model.Order
 import io.github.damirtugushev.restaurantmanager.presentation.model.OrderData
 import io.github.damirtugushev.restaurantmanager.presentation.repository.Repository
 import kotlinx.coroutines.Dispatchers
@@ -18,6 +17,7 @@ object MockOrderRepository : Repository<OrderData> {
             nanoId = NanoIdUtils.randomNanoId(),
             tableNumber = index.toByte(),
             guestsNumber = index.toByte(),
+            documentUri = null,
         )
     }
 
@@ -27,14 +27,17 @@ object MockOrderRepository : Repository<OrderData> {
 
     override val allOrders: LiveData<out List<OrderData>> get() = data
 
-    override suspend fun add(order: Order) {
-        @Suppress("NAME_SHADOWING")
-        val order = when (order) {
-            is OrderData -> order
-            else -> OrderData(order)
-        }
-
+    override suspend fun add(order: OrderData) {
         list = list + order
+        withContext(defaultDispatcher) {
+            data.value = list
+        }
+    }
+
+    override suspend fun update(order: OrderData) {
+        val index = list.indexOfFirst { it.nanoId == order.nanoId }
+        require(index > -1) { "No such item in repository: item is $order" }
+        list = list.toMutableList().apply { set(index, order) }
         withContext(defaultDispatcher) {
             data.value = list
         }

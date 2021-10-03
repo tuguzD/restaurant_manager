@@ -15,4 +15,6 @@
     <string name="account">Account</string>
 
     <string name="share">Share</string>
+    <string name="order_document">Order document</string>
+    <string name="open_document">%1$s</string>
 </resources>
