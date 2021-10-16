@@ -11,18 +11,30 @@
         android:name="io.github.damirtugushev.restaurantmanager.presentation.view.order.OrderListFragment"
         android:label="fragment_order_list"
         tools:layout="@layout/fragment_order_list">
+
+        <action
+            android:id="@+id/action_search_restaurant_fragment"
+            app:destination="@+id/search_restaurant_fragment" />
+
         <action
             android:id="@+id/action_order_add_fragment"
             app:destination="@id/order_add_fragment" />
+
         <action
             android:id="@+id/action_order_item_fragment"
             app:enterAnim="@anim/slide_in"
             app:exitAnim="@anim/fade_out"
             app:popEnterAnim="@anim/fade_in"
             app:popExitAnim="@anim/slide_out"
-            app:destination="@id/order_item_fragment">
-        </action>
+            app:destination="@id/order_item_fragment" />
+
     </fragment>
+
+    <fragment
+        android:id="@+id/search_restaurant_fragment"
+        android:name="io.github.damirtugushev.restaurantmanager.presentation.view.order.SearchRestaurantFragment"
+        android:label="fragment_search_restaurant"
+        tools:layout="@layout/fragment_search_restaurant" />
 
     <fragment
         android:id="@+id/order_add_fragment"
@@ -36,10 +48,20 @@
         android:label="fragment_order_item"
         tools:layout="@layout/fragment_order_item">
 
+        <action
+            android:id="@+id/action_meal_add_fragment"
+            app:destination="@id/meal_add_fragment" />
+
         <argument
             android:name="order"
             app:argType="io.github.damirtugushev.restaurantmanager.presentation.model.OrderData" />
 
     </fragment>
+
+    <fragment
+        android:id="@+id/meal_add_fragment"
+        android:name="io.github.damirtugushev.restaurantmanager.presentation.view.order.MealAddFragment"
+        android:label="fragment_meal_add"
+        tools:layout="@layout/fragment_meal_add" />
 
 </navigation>

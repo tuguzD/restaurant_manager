@@ -11,7 +11,6 @@ import io.github.damirtugushev.restaurantmanager.presentation.repository.mock.Mo
 import io.github.damirtugushev.restaurantmanager.presentation.repository.room.dto.OrderDto
 import kotlinx.coroutines.launch
 
-
 class OrderAddViewModel : ViewModel() {
     fun addOrder(tableNumber: Byte, guestsNumber: Byte) {
         val nanoId = NanoIdUtils.randomNanoId()

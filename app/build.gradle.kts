@@ -62,6 +62,10 @@ dependencies {
     // Room annotations with Kotlin annotation processing tool
     kapt("androidx.room:room-compiler:$roomVersion")
 
+    // Paging
+    val pagingVersion = "3.0.1"
+    implementation("androidx.paging:paging-runtime:$pagingVersion")
+
     // Third-party
     implementation("com.aventrix.jnanoid:jnanoid:2.0.0")
 

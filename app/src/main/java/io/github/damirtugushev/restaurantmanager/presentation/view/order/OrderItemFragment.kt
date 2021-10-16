@@ -9,6 +9,7 @@ import android.view.*
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import io.github.damirtugushev.restaurantmanager.R
 import io.github.damirtugushev.restaurantmanager.databinding.FragmentOrderItemBinding
@@ -70,6 +71,11 @@ class OrderItemFragment : Fragment() {
                 return@run
             }
             button.visibility = View.GONE
+        }
+
+        binding.fab.setOnClickListener {
+            val action = OrderItemFragmentDirections.actionMealAddFragment()
+            findNavController().navigate(action)
         }
 
         return binding.root

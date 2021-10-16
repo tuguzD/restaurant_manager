@@ -1,9 +1,7 @@
 package io.github.damirtugushev.restaurantmanager.presentation.view.order
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -17,6 +15,7 @@ import io.github.damirtugushev.restaurantmanager.presentation.view.order.adapter
 import io.github.damirtugushev.restaurantmanager.presentation.view.MarginDecoration
 import io.github.damirtugushev.restaurantmanager.presentation.view.snackbarShort
 import io.github.damirtugushev.restaurantmanager.presentation.viewmodel.order.OrderListViewModel
+import io.github.damirtugushev.restaurantmanager.presentation.view.hasOptionsMenu
 
 /**
  * A [Fragment] subclass which represents list of [orders][Order].
@@ -34,6 +33,7 @@ class OrderListFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentOrderListBinding.inflate(inflater, container, false)
+        hasOptionsMenu = true
 
         val adapter = OrderListAdapter()
         binding.orderList.adapter = adapter
@@ -71,7 +71,8 @@ class OrderListFragment : Fragment() {
         itemTouchHelper.attachToRecyclerView(binding.orderList)
 
         binding.fab.setOnClickListener {
-            findNavController().navigate(R.id.action_order_add_fragment)
+            val action = OrderListFragmentDirections.actionOrderAddFragment()
+            findNavController().navigate(action)
         }
 
         viewModel.allOrders.observe(viewLifecycleOwner) {
@@ -79,6 +80,19 @@ class OrderListFragment : Fragment() {
         }
 
         return binding.root
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.order_list_menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+        R.id.order_list_search_restaurant -> {
+            val action = OrderListFragmentDirections.actionSearchRestaurantFragment()
+            findNavController().navigate(action)
+            true
+        }
+        else -> super.onOptionsItemSelected(item)
     }
 
     override fun onDestroyView() {

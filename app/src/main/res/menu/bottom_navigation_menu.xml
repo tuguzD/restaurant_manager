@@ -1,18 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
     <item
         android:id="@+id/orders_nav_graph"
         android:enabled="true"
         android:icon="@drawable/round_brunch_dining_24"
         android:title="@string/orders" />
+
     <item
         android:id="@+id/delivery_nav_graph"
         android:enabled="true"
         android:icon="@drawable/round_timer_24"
         android:title="@string/delivery" />
+
     <item
         android:id="@+id/account_nav_graph"
         android:enabled="true"
         android:icon="@drawable/round_account_circle_24"
         android:title="@string/account" />
+
 </menu>
