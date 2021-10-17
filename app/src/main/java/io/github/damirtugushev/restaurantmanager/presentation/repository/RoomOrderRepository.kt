@@ -3,8 +3,9 @@ package io.github.damirtugushev.restaurantmanager.presentation.repository
 import android.app.Application
 import androidx.lifecycle.LiveData
 import io.github.damirtugushev.restaurantmanager.presentation.repository.room.dto.OrderDto
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.launch
 
 /**
  * Safe wrapper around Room database.
@@ -16,20 +17,23 @@ class RoomOrderRepository internal constructor(application: Application) : Repos
     private val roomDatabase = RoomOrderDatabase.getInstance(application)
     private val ordersDao get() = roomDatabase.ordersDao
 
-    override val defaultDispatcher = Dispatchers.IO
+    private val coroutineScope = CoroutineScope(Dispatchers.Main)
 
     override val allOrders: LiveData<List<OrderDto>> = ordersDao.getAll()
 
-    override suspend fun add(order: OrderDto) =
-        withContext(defaultDispatcher) { ordersDao.insert(order) }
+    override fun add(order: OrderDto) {
+        coroutineScope.launch { ordersDao.insert(order) }
+    }
 
-    override suspend fun update(order: OrderDto) =
-        withContext(defaultDispatcher) { ordersDao.update(order) }
+    override fun update(order: OrderDto) {
+        coroutineScope.launch { ordersDao.update(order) }
+    }
 
-    override suspend fun remove(order: OrderDto) =
-        withContext(defaultDispatcher) { ordersDao.delete(order) }
+    override fun remove(order: OrderDto) {
+        coroutineScope.launch { ordersDao.delete(order) }
+    }
 
-    override suspend fun clear() =
-        withContext(defaultDispatcher) { ordersDao.deleteAll() }
-
+    override fun clear() {
+        coroutineScope.launch { ordersDao.deleteAll() }
+    }
 }

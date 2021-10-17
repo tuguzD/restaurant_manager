@@ -3,9 +3,10 @@ package io.github.damirtugushev.restaurantmanager.presentation.repository.room.d
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
-import androidx.room.Query
 import androidx.room.Update
 import androidx.room.Delete
+import androidx.room.Query
+import androidx.room.Transaction
 import io.github.damirtugushev.restaurantmanager.domain.model.Order
 import io.github.damirtugushev.restaurantmanager.presentation.repository.room.dto.OrderDto
 
@@ -14,6 +15,10 @@ import io.github.damirtugushev.restaurantmanager.presentation.repository.room.dt
  */
 @Dao
 interface OrderDao {
+//    @Transaction
+//    @Query("SELECT * FROM `order` WHERE `nanoId` LIKE :nanoId")
+//    fun getMealsOfOrder(nanoId: String): LiveData<List<MealsOfOrder>>
+
     @Insert
     suspend fun insert(order: OrderDto)
 

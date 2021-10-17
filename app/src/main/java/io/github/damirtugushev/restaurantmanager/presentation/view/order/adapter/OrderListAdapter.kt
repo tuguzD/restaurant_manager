@@ -16,8 +16,7 @@ class OrderListAdapter : ListAdapter<Order, OrderViewHolder>(OrderDiffCallback) 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OrderViewHolder {
         val binding = ItemOrderBinding.inflate(
             LayoutInflater.from(parent.context),
-            parent,
-            false,
+            parent, false,
         )
         return OrderViewHolder(binding)
     }

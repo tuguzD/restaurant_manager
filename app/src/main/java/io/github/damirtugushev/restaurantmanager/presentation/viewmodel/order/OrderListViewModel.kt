@@ -1,7 +1,6 @@
 package io.github.damirtugushev.restaurantmanager.presentation.viewmodel.order
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.aventrix.jnanoid.jnanoid.NanoIdUtils
 import io.github.damirtugushev.restaurantmanager.domain.model.Order
 import io.github.damirtugushev.restaurantmanager.presentation.model.OrderData
@@ -10,7 +9,6 @@ import io.github.damirtugushev.restaurantmanager.presentation.repository.Reposit
 import io.github.damirtugushev.restaurantmanager.presentation.repository.mock.MockOrderRepository
 import io.github.damirtugushev.restaurantmanager.presentation.repository.room.dto.OrderDto
 import io.github.damirtugushev.restaurantmanager.presentation.view.order.OrderAddFragment
-import kotlinx.coroutines.launch
 
 /**
  * [ViewModel] subclass for [OrderAddFragment].
@@ -25,9 +23,8 @@ class OrderListViewModel : ViewModel() {
             MockOrderRepository -> OrderData(nanoId, tableNumber, guestsNumber, null)
             else -> OrderDto(nanoId, tableNumber, guestsNumber, null)
         }
-        viewModelScope.launch {
-            repository.add(order)
-        }
+        repository.add(order)
+
     }
 
     fun updateOrder(item: OrderData) {
@@ -36,20 +33,14 @@ class OrderListViewModel : ViewModel() {
             is MockOrderRepository -> item
             else -> OrderDto(item)
         }
-        viewModelScope.launch {
-            repository.update(order)
-        }
+        repository.update(order)
     }
 
     fun deleteOrder(order: Order) {
-        viewModelScope.launch {
-            RepositoryAccess.localRepository.remove(order)
-        }
+        RepositoryAccess.localRepository.remove(order)
     }
 
     fun deleteAllOrders() {
-        viewModelScope.launch {
-            RepositoryAccess.localRepository.clear()
-        }
+        RepositoryAccess.localRepository.clear()
     }
 }

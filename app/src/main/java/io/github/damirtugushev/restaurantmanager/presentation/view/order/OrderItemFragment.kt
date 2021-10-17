@@ -2,7 +2,6 @@ package io.github.damirtugushev.restaurantmanager.presentation.view.order
 
 import android.content.Intent
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.provider.OpenableColumns
 import android.view.*
@@ -11,18 +10,20 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.navigation.navGraphViewModels
 import io.github.damirtugushev.restaurantmanager.R
 import io.github.damirtugushev.restaurantmanager.databinding.FragmentOrderItemBinding
 import io.github.damirtugushev.restaurantmanager.presentation.model.OrderData
+import io.github.damirtugushev.restaurantmanager.presentation.view.MarginDecoration
 import io.github.damirtugushev.restaurantmanager.presentation.view.hasOptionsMenu
-import io.github.damirtugushev.restaurantmanager.presentation.view.snackbarShort
+import io.github.damirtugushev.restaurantmanager.presentation.view.order.adapter.OrderItemAdapter
 import io.github.damirtugushev.restaurantmanager.presentation.viewmodel.order.OrderItemViewModel
 import io.github.damirtugushev.restaurantmanager.presentation.viewmodel.order.OrderListViewModel
 
 class OrderItemFragment : Fragment() {
     private val args: OrderItemFragmentArgs by navArgs()
     private val listViewModel: OrderListViewModel by viewModels()
-    private val itemViewModel: OrderItemViewModel by viewModels()
+    private val itemViewModel: OrderItemViewModel by navGraphViewModels(R.id.orders_nav_graph)
 
     private var _binding: FragmentOrderItemBinding? = null
 
@@ -37,6 +38,12 @@ class OrderItemFragment : Fragment() {
     ): View {
         _binding = FragmentOrderItemBinding.inflate(inflater, container, false)
         hasOptionsMenu = true
+
+        val adapter = OrderItemAdapter()
+        binding.list.adapter = adapter
+
+        val spaceSize = resources.getDimensionPixelSize(R.dimen.list_item_margin)
+        binding.list.addItemDecoration(MarginDecoration(spaceSize))
 
         itemViewModel.order = args.order
         val order = args.order
@@ -78,6 +85,10 @@ class OrderItemFragment : Fragment() {
             findNavController().navigate(action)
         }
 
+        itemViewModel.allMeals.observe(viewLifecycleOwner) {
+            it?.let { adapter.submitList(it) }
+        }
+
         return binding.root
     }
 
@@ -115,41 +126,36 @@ class OrderItemFragment : Fragment() {
         }
 
         R.id.order_item_document -> {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                val activity = requireActivity()
-                activity.activityResultRegistry
-                    .register("key", ActivityResultContracts.OpenDocument())
-                    {
-                        it?.let { uri ->
-                            activity.applicationContext.contentResolver.takePersistableUriPermission(
-                                uri, Intent.FLAG_GRANT_READ_URI_PERMISSION,
-                            )
-                            val order = OrderData(
-                                args.order.nanoId,
-                                args.order.tableNumber,
-                                args.order.guestsNumber,
-                                uri.toString(),
-                            )
-                            listViewModel.updateOrder(order)
-                            itemViewModel.order = order
+            val activity = requireActivity()
+            activity.activityResultRegistry
+                .register("key", ActivityResultContracts.OpenDocument())
+                {
+                    it?.let { uri ->
+                        activity.applicationContext.contentResolver.takePersistableUriPermission(
+                            uri, Intent.FLAG_GRANT_READ_URI_PERMISSION,
+                        )
+                        val order = OrderData(
+                            args.order.nanoId,
+                            args.order.tableNumber,
+                            args.order.guestsNumber,
+                            uri.toString(),
+                        )
+                        listViewModel.updateOrder(order)
+                        itemViewModel.order = order
 
-                            val fileName = getFileName(uri)
-                            if (fileName != null) {
-                                binding.button.visibility = View.VISIBLE
-                                binding.button.text = binding.root.resources.getString(
-                                    R.string.open_document, fileName
-                                )
-                            }
+                        val fileName = getFileName(uri)
+                        if (fileName != null) {
+                            binding.button.visibility = View.VISIBLE
+                            binding.button.text = binding.root.resources.getString(
+                                R.string.open_document, fileName
+                            )
                         }
-                    }.launch(arrayOf(
-                        "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-                        "application/msword", "text/plain",
-                    ))
-                true
-            } else {
-                snackbarShort { "This is supported only on Android devices above 4.4 KitKat" }.show()
-                super.onOptionsItemSelected(item)
-            }
+                    }
+                }.launch(arrayOf(
+                    "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                    "application/msword", "text/plain",
+                ))
+            true
         }
         else -> super.onOptionsItemSelected(item)
     }

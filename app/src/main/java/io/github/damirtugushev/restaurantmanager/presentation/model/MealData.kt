@@ -11,7 +11,8 @@ data class MealData(
     override val name: String,
     override val description: String,
     val orderNanoId: String?,
+    val imageUrl: String = ""
 ) : Meal, Parcelable {
     constructor(m: Meal) : this(m.nanoId, m.name, m.description, null)
-    constructor(m: MealDto) : this(m.nanoId, m.name, m.description, m.orderNanoId)
+//    constructor(m: MealDto) : this(m.nanoId, m.name, m.description, m.orderNanoId)
 }

@@ -1,6 +1,5 @@
 package io.github.damirtugushev.restaurantmanager.presentation.repository.room.dto
 
-import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import io.github.damirtugushev.restaurantmanager.domain.model.Meal
@@ -14,7 +13,7 @@ data class MealDto(
     @PrimaryKey override val nanoId: String,
     override val name: String,
     override val description: String,
-    @ColumnInfo(name = "order_nano_id") val orderNanoId: String?,
+    val orderNanoId: String?,
 ) : Meal {
     constructor(m: Meal) : this(m.nanoId, m.name, m.description, null)
     constructor(m: MealData) : this(m.nanoId, m.name, m.description, m.orderNanoId)

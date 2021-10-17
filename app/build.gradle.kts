@@ -3,6 +3,7 @@ plugins {
     id("kotlin-parcelize")
     kotlin("android")
     kotlin("kapt")
+    kotlin("plugin.serialization")
     id("androidx.navigation.safeargs.kotlin")
 }
 
@@ -11,7 +12,7 @@ android {
 
     defaultConfig {
         applicationId = "io.github.damirtugushev.restaurantmanager"
-        minSdk = 16
+        minSdk = 21
         targetSdk = 30
         versionCode = 1
         versionName = "1.0"
@@ -36,6 +37,7 @@ android {
     }
     kotlinOptions {
         jvmTarget = "1.8"
+        freeCompilerArgs += "-Xopt-in=kotlin.RequiresOptIn"
     }
 }
 
@@ -53,7 +55,10 @@ dependencies {
     implementation("androidx.navigation:navigation-ui-ktx:2.3.5")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.3.1")
+
+    // Kotlin extensions
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.0")
 
     // Room
     val roomVersion = "2.3.0"
@@ -66,8 +71,14 @@ dependencies {
     val pagingVersion = "3.0.1"
     implementation("androidx.paging:paging-runtime:$pagingVersion")
 
+    // Retrofit
+    val retrofitVersion = "2.9.0"
+    implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
+    implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0")
+
     // Third-party
     implementation("com.aventrix.jnanoid:jnanoid:2.0.0")
+    implementation("com.squareup.picasso:picasso:2.71828")
 
     // Testing
     testImplementation("junit:junit:4.13.2")

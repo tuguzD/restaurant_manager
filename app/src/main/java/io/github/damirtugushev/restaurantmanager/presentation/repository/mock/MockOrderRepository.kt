@@ -5,8 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import com.aventrix.jnanoid.jnanoid.NanoIdUtils
 import io.github.damirtugushev.restaurantmanager.presentation.model.OrderData
 import io.github.damirtugushev.restaurantmanager.presentation.repository.Repository
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.launch
 
 /**
  * Mock repository of [components][OrderData].
@@ -23,36 +24,36 @@ object MockOrderRepository : Repository<OrderData> {
 
     private val data = MutableLiveData(list)
 
-    override val defaultDispatcher = Dispatchers.Main
+    private val coroutineScope = CoroutineScope(Dispatchers.Main)
 
     override val allOrders: LiveData<out List<OrderData>> get() = data
 
-    override suspend fun add(order: OrderData) {
+    override fun add(order: OrderData) {
         list = list + order
-        withContext(defaultDispatcher) {
+        coroutineScope.launch {
             data.value = list
         }
     }
 
-    override suspend fun update(order: OrderData) {
+    override fun update(order: OrderData) {
         val index = list.indexOfFirst { it.nanoId == order.nanoId }
         require(index > -1) { "No such item in repository: item is $order" }
         list = list.toMutableList().apply { set(index, order) }
-        withContext(defaultDispatcher) {
+        coroutineScope.launch {
             data.value = list
         }
     }
 
-    override suspend fun remove(order: OrderData) {
+    override fun remove(order: OrderData) {
         list = list - order
-        withContext(defaultDispatcher) {
+        coroutineScope.launch {
             data.value = list
         }
     }
 
-    override suspend fun clear() {
+    override fun clear() {
         list = listOf()
-        withContext(defaultDispatcher) {
+        coroutineScope.launch {
             data.value = list
         }
     }

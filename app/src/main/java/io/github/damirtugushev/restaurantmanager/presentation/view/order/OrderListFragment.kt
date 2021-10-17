@@ -82,18 +82,18 @@ class OrderListFragment : Fragment() {
         return binding.root
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.order_list_menu, menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
-        R.id.order_list_search_restaurant -> {
-            val action = OrderListFragmentDirections.actionSearchRestaurantFragment()
-            findNavController().navigate(action)
-            true
-        }
-        else -> super.onOptionsItemSelected(item)
-    }
+//    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+//        inflater.inflate(R.menu.order_list_menu, menu)
+//    }
+//
+//    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+//        R.id.order_list_search_restaurant -> {
+//            val action = OrderListFragmentDirections.actionSearchRestaurantFragment()
+//            findNavController().navigate(action)
+//            true
+//        }
+//        else -> super.onOptionsItemSelected(item)
+//    }
 
     override fun onDestroyView() {
         super.onDestroyView()
