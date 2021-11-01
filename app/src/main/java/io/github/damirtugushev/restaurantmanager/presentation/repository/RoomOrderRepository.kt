@@ -1,39 +1,70 @@
 package io.github.damirtugushev.restaurantmanager.presentation.repository
 
-import android.app.Application
 import androidx.lifecycle.LiveData
+import io.github.damirtugushev.restaurantmanager.domain.model.Order
+import io.github.damirtugushev.restaurantmanager.presentation.model.OrderData
+import io.github.damirtugushev.restaurantmanager.presentation.repository.room.RoomDatabase
 import io.github.damirtugushev.restaurantmanager.presentation.repository.room.dto.OrderDto
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 /**
- * Safe wrapper around Room database.
+ * Room repository of [orders][Order].
  *
- * @see RoomOrderDatabase
+ * @see Order
  */
-class RoomOrderRepository internal constructor(application: Application) : Repository<OrderDto> {
+internal class RoomOrderRepository(private val roomDatabase: RoomDatabase) :
+    Repository<String, Order> {
 
-    private val roomDatabase = RoomOrderDatabase.getInstance(application)
-    private val ordersDao get() = roomDatabase.ordersDao
+    private val orderDao get() = roomDatabase.orderDao
 
-    private val coroutineScope = CoroutineScope(Dispatchers.Main)
+    private val coroutineScope = CoroutineScope(Dispatchers.IO)
 
-    override val allOrders: LiveData<List<OrderDto>> = ordersDao.getAll()
+    override val allData = orderDao.getAll()
 
-    override fun add(order: OrderDto) {
-        coroutineScope.launch { ordersDao.insert(order) }
+    override fun findById(nanoId: String): LiveData<out Order> = orderDao.findById(nanoId)
+
+    override fun add(item: Order) {
+        val component = when (item) {
+            is OrderData -> OrderDto(item)
+            is OrderDto -> item
+            else -> throw IllegalStateException(
+                "Data loss: item must be convertible to ${OrderDto::class.qualifiedName}"
+            )
+        }
+        coroutineScope.launch {
+            orderDao.insert(component)
+        }
     }
 
-    override fun update(order: OrderDto) {
-        coroutineScope.launch { ordersDao.update(order) }
+    override fun update(item: Order) {
+        val component = when (item) {
+            is OrderData -> OrderDto(item)
+            is OrderDto -> item
+            else -> throw IllegalStateException(
+                "Data loss: item must be convertible to ${OrderDto::class.qualifiedName}"
+            )
+        }
+        coroutineScope.launch {
+            orderDao.update(component)
+        }
     }
 
-    override fun remove(order: OrderDto) {
-        coroutineScope.launch { ordersDao.delete(order) }
+    override fun remove(item: Order) {
+        val component = when (item) {
+            is OrderData -> OrderDto(item)
+            is OrderDto -> item
+            else -> throw IllegalStateException(
+                "Data loss: item must be convertible to ${OrderDto::class.qualifiedName}"
+            )
+        }
+        coroutineScope.launch {
+            orderDao.delete(component)
+        }
     }
 
     override fun clear() {
-        coroutineScope.launch { ordersDao.deleteAll() }
+        coroutineScope.launch { orderDao.deleteAll() }
     }
 }

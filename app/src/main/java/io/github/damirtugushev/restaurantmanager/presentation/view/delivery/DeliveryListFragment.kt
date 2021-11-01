@@ -18,8 +18,7 @@ class DeliveryListFragment : Fragment() {
 
     private var _binding: FragmentDeliveryListBinding? = null
 
-    // This helper property is only valid between
-    // `onCreateView` and `onDestroyView`.
+    // This helper property is only valid between `onCreateView` and `onDestroyView`.
     private val binding get() = _binding!!
 
     override fun onCreateView(

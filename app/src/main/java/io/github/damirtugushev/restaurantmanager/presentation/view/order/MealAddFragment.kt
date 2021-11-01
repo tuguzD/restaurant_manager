@@ -25,7 +25,7 @@ class MealAddFragment : Fragment() {
 
     private var _binding: FragmentMealAddBinding? = null
     // This helper properties are only valid between `onCreateView` and `onDestroyView`.
-    private val binding get() = _binding!!
+    private inline val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -50,9 +50,10 @@ class MealAddFragment : Fragment() {
                 override fun onQueryTextSubmit(query: String?): Boolean {
                     if (query.isNullOrBlank())
                         return true
-                    viewModel.searchMeals(query.trim(), 3).observe(viewLifecycleOwner) {
-                        pagingAdapter.submitData(lifecycle, it)
-                    }
+                    viewModel.searchMeals(query.trim(), 3)
+                        .observe(viewLifecycleOwner) {
+                            pagingAdapter.submitData(lifecycle, it)
+                        }
                     return true
                 }
             })

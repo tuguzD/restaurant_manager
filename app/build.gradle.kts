@@ -7,6 +7,23 @@ plugins {
     id("androidx.navigation.safeargs.kotlin")
 }
 
+// TODO remove after Kotlin 1.6.0 release
+kotlin {
+    kotlinDaemonJvmArgs = listOf(
+        "-Dfile.encoding=UTF-8",
+        "--add-opens=jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED",
+        "--add-opens=jdk.compiler/com.sun.tools.javac.code=ALL-UNNAMED",
+        "--add-opens=jdk.compiler/com.sun.tools.javac.comp=ALL-UNNAMED",
+        "--add-opens=jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED",
+        "--add-opens=jdk.compiler/com.sun.tools.javac.jvm=ALL-UNNAMED",
+        "--add-opens=jdk.compiler/com.sun.tools.javac.main=ALL-UNNAMED",
+        "--add-opens=jdk.compiler/com.sun.tools.javac.parser=ALL-UNNAMED",
+        "--add-opens=jdk.compiler/com.sun.tools.javac.processing=ALL-UNNAMED",
+        "--add-opens=jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED",
+        "--add-opens=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED"
+    )
+}
+
 android {
     compileSdk = 30
 
@@ -59,6 +76,7 @@ dependencies {
     // Kotlin extensions
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.5.2")
 
     // Room
     val roomVersion = "2.3.0"
@@ -75,6 +93,9 @@ dependencies {
     val retrofitVersion = "2.9.0"
     implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
     implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0")
+
+    // Google
+    implementation("com.google.android.gms:play-services-auth:19.2.0")
 
     // Third-party
     implementation("com.aventrix.jnanoid:jnanoid:2.0.0")

@@ -35,6 +35,11 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name="io.github.damirtugushev.restaurantmanager.presentation.view.account.LoginActivity"
+            android:exported="false">
+        </activity>
+
     </application>
 
 </manifest>

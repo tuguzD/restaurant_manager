@@ -16,6 +16,11 @@
         <item name="bottomNavigationStyle">@style/Widget.MaterialComponents.BottomNavigationView.Colored</item>
     </style>
 
+    <!-- App theme for rounded ImageView. -->
+    <style name="Theme.RestaurantManager.RoundImageView">
+        <item name="cornerSize">50%</item>
+    </style>
+
     <!-- Light application theme. -->
     <style name="Theme.RestaurantManager" parent="Theme.RestaurantManager.Base" />
 </resources>

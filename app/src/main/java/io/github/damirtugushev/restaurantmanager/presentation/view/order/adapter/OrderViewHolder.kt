@@ -11,7 +11,7 @@ class OrderViewHolder(private val binding: ItemOrderBinding) :
     RecyclerView.ViewHolder(binding.root) {
 
     private lateinit var _order: OrderData
-    val order get() = _order
+    private inline val order get() = _order
 
     init {
         binding.root.setOnClickListener {

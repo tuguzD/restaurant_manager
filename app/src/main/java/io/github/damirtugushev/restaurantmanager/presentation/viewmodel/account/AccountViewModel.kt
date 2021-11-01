@@ -1,5 +1,12 @@
 package io.github.damirtugushev.restaurantmanager.presentation.viewmodel.account
 
-import androidx.lifecycle.ViewModel
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
+import io.github.damirtugushev.restaurantmanager.presentation.repository.RepositoryAccess
 
-class AccountViewModel : ViewModel()
+/**
+ * View model of 'Account' page.
+ */
+class AccountViewModel(application: Application) : AndroidViewModel(application) {
+    val currentUser get() = RepositoryAccess.currentUser
+}

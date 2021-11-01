@@ -10,7 +10,7 @@ class MealViewHolder(private val binding: ItemMealBinding) :
     RecyclerView.ViewHolder(binding.root) {
 
     private lateinit var _meal: MealData
-    val meal get() = _meal
+    private inline val meal get() = _meal
 
     fun bind(meal: MealData) {
         _meal = meal
@@ -23,5 +23,4 @@ class MealViewHolder(private val binding: ItemMealBinding) :
             imageView.visibility = View.VISIBLE
         }
     }
-
 }

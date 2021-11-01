@@ -29,8 +29,8 @@ object SpoonacularSearcher {
         .build()
 
     @JvmStatic
-    private val spoonacularApi: SpoonacularApi = retrofit.create(SpoonacularApi::class.java)
-//        MockSpoonacularApi
+    private val spoonacularApi: SpoonacularApi =
+        retrofit.create(SpoonacularApi::class.java) // MockSpoonacularApi
 
     @JvmStatic
     @OptIn(ExperimentalCoroutinesApi::class)

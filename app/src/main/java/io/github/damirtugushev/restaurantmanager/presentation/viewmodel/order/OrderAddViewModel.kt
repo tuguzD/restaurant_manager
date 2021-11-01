@@ -14,14 +14,14 @@ import kotlinx.coroutines.launch
 class OrderAddViewModel : ViewModel() {
     fun addOrder(tableNumber: Byte, guestsNumber: Byte) {
         val nanoId = NanoIdUtils.randomNanoId()
-        val repository = RepositoryAccess.localRepository
-        val order = when (repository as Repository<out Order>) {
+        val repository = RepositoryAccess.localOrderRepository
+        val order = when (repository as Repository<String, out Order>) {
             is MockOrderRepository -> OrderData(nanoId, tableNumber, guestsNumber, null)
             else -> OrderDto(nanoId, tableNumber, guestsNumber, null)
         }
 
         viewModelScope.launch {
-            RepositoryAccess.localRepository.add(order)
+            RepositoryAccess.localOrderRepository.add(order)
         }
     }
 }
